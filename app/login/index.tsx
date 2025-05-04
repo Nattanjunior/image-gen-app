@@ -24,7 +24,7 @@ const {startOAuthFlow} = useOAuth({strategy: 'oauth_google'});
 const onPress = React.useCallback(async () => {
   try {
     const {createdSessionId, signIn, signUp, setActive} = await startOAuthFlow({
-      redirectUrl: Linking.createURL('/dashboard', {scheme: 'aiimagegenapp'})
+      redirectUrl: Linking.createURL('/(tabs)/home', {scheme: 'aiimagegenapp'})
     });
 
     if (createdSessionId) {
