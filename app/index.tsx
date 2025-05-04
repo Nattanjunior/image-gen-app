@@ -1,6 +1,6 @@
 import { useUser } from "@clerk/clerk-expo";
 import { Redirect } from "expo-router";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 
 export default function Index() {
   const {user} = useUser();
@@ -9,8 +9,7 @@ export default function Index() {
 
   return (
     <View>
-
-      {!user ? <Redirect href="/login" /> : <Text>Login success</Text>}
+      {!user ? <Redirect href="/login" /> : <Redirect href="/(tabs)/home" />}
     </View>
   );
 }
