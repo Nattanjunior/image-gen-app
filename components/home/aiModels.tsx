@@ -1,9 +1,11 @@
 import GlobalApi from '@/services/GlobalApi';
+import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { FlatList, Image, Text, View } from 'react-native';
+import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
 export default function AiModels({ type }: { type: string }) {
   
   const [aiModelList, setAiModelList] = useState<any[]>([])
+  const router = useRouter()
 
   useEffect(() => {
     GetAiModelList()
@@ -11,10 +13,12 @@ export default function AiModels({ type }: { type: string }) {
 
   const GetAiModelList = async () => {
     const response = await GlobalApi.GetAiModelList(type)
-    console.log(response)
     setAiModelList(response.data.data)
   }
 
+  const onPressAiModel = () => {
+    router.push({pathname: '/FormInput',})
+  }
 
   return (
     <View>
@@ -25,12 +29,12 @@ export default function AiModels({ type }: { type: string }) {
         showsHorizontalScrollIndicator={false}
         nestedScrollEnabled={true}
         renderItem={({ item }) => (
-          <View className='mr-4'>
+          <TouchableOpacity className='mr-4' onPress={() => onPressAiModel()}>
             <Image source={{ uri: item?.banner?.url }}
               className='w-[140px] h-[140px] rounded-2xl'
             />
             <Text className='absolute bottom-2 left-2 text-white text-lg font-medium'>{item?.name}</Text>
-          </View>
+          </TouchableOpacity>
         )}
       />
     </View>
