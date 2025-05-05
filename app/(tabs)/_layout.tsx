@@ -6,7 +6,6 @@ import { Tabs } from 'expo-router';
 import { useContext, useEffect } from 'react';
 
 
-
 export default function TabsLayout() {
 
   const {user} = useUser()
@@ -20,7 +19,7 @@ export default function TabsLayout() {
     console.log(result.data.data)
 
     if(result.data.data.length != 0){
-      setUserDetail(result.data.data)
+      setUserDetail(result.data.data[0])
       return;
     }
 
@@ -31,7 +30,7 @@ export default function TabsLayout() {
       }
       const result = await GlobalApi.CreateUserInfo(JSON.stringify(data))
       console.log(result?.data.data)
-      setUserDetail(result?.data.data)
+      setUserDetail(result?.data.data[0])
     } catch (error) {
       console.log(error)
     }
