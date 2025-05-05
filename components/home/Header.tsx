@@ -7,8 +7,6 @@ export default function Header() {
   const { user } = useUser()
   const {userDetail, setUserDetail} = useContext(UserDetailContext)
 
-  console.log('DETALHES DO USUARIO',userDetail)
-
   return (
     <View className='flex-row justify-between' >
       <Text className='text-2xl font-bold text-black'>Imagin AI</Text>
