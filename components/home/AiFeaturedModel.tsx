@@ -1,25 +1,33 @@
 import GlobalApi from '@/services/GlobalApi';
+import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { FlatList, Image, Text, View } from 'react-native';
+import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
 
 export default function AiFeaturedModel() {
   const [aiModelList, setAiModelList] = useState<any[]>([])
+  const router = useRouter()
+
 
   useEffect(() => {
     GetAiModelList()
   }, [])
 
   const GetAiModelList = async () => {
-    console.log('Iniciando chamada da API...')
     try {
       const response = await GlobalApi.GetFeaturedCategoryList()
-      console.log('Resposta da API:', response)
-      console.log('Dados:', response.data.data)
       setAiModelList(response.data.data)
     } catch (error) {
       console.error('Erro ao buscar modelos:', error)
     }
   }
+
+  const onPressAiModel = (item: any) => {  
+    router.push({
+      pathname: '/FormInput',
+      params: item
+    })
+  }
+
   return (
     <View className='mt-5'>
       <Text className='text-2xl font-bold'>FEATURED</Text>
@@ -28,7 +36,7 @@ export default function AiFeaturedModel() {
         className='mt-2'
         numColumns={4}
         renderItem={({ item }) => (
-          <View className='flex-1 items-center'>
+          <TouchableOpacity className='flex-1 items-center' onPress={() => onPressAiModel(item)}>
             <View className='p-2.5 rounded-lg bg-gray-300'>
               <Image
                 source={{ uri: item?.icon?.url }}
@@ -36,7 +44,7 @@ export default function AiFeaturedModel() {
               />
             </View>
             <Text className='text-[11px] text-center mt-2 text-black'>{item?.name as string}</Text>
-          </View>
+          </TouchableOpacity>
         )}
       />
     </View>
